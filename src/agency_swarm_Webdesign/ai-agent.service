@@ -1,0 +1,14 @@
+[Unit]
+Description=AI Agent Web Application
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/ai-agent
+Environment="PATH=/var/www/ai-agent/venv/bin"
+ExecStart=/var/www/ai-agent/venv/bin/gunicorn wsgi:demo -b 127.0.0.1:8080 -w 4 -k uvicorn.workers.UvicornWorker
+Restart=always
+
+[Install]
+WantedBy=multi-user.target 

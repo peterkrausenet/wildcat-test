@@ -11,7 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
-from ExampleAgency.agency import agency
+from agency_swarm_Webdesign.agency import agency
 from utils.demo_gradio_override import demo_gradio_override
 
 APP_TOKEN = os.getenv("APP_TOKEN")

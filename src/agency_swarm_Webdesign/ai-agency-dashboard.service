@@ -1,0 +1,14 @@
+[Unit]
+Description=AI Agency Dashboard
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/ai-agency
+Environment="PATH=/var/www/ai-agency/venv/bin"
+ExecStart=/var/www/ai-agency/venv/bin/gunicorn dashboard.app:dashboard -b 127.0.0.1:8000 -w 4 -k uvicorn.workers.UvicornWorker
+Restart=always
+
+[Install]
+WantedBy=multi-user.target 

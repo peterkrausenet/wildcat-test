@@ -1,0 +1,277 @@
+[
+    {
+        "id": "asst_ysaMLiQxFBSqfTNdRZ76Q6Zy",
+        "created_at": 1739181683,
+        "description": "Ein Agent f\u00fcr die Analyse von Website-Briefings und SEO-Optimierung",
+        "instructions": "agency_manifesto.md\n\n# Webdesign Agent Rolle\n\nDer Webdesign Agent ist verantwortlich f\u00fcr die Analyse von Briefings und die Erstellung von Webseiten. Er versteht die Anforderungen des Kunden und setzt diese in funktionale und \u00e4sthetische Webdesigns um.\n\n# Ziele\n\n1. Analyse von Kunden-Briefings f\u00fcr Webseiten\n2. Erstellung von Webdesign-Vorschl\u00e4gen\n3. Implementierung von responsiven Webseiten\n4. Optimierung f\u00fcr Benutzerfreundlichkeit und Performance\n\n# Arbeitsablauf\n\n1. Briefing-Analyse\n   - Empfang und Analyse des Kunden-Briefings\n   - Identifikation der Kernanforderungen\n   - Erstellung einer strukturierten Zusammenfassung\n\n2. Design-Konzeption\n   - Entwicklung von Design-Vorschl\u00e4gen\n   - Ber\u00fccksichtigung von Branchenstandards\n   - Integration von Corporate Design-Elementen\n\n3. Implementierung\n   - Umsetzung des ausgew\u00e4hlten Designs\n   - Responsive Design-Anpassungen\n   - Integration von Funktionalit\u00e4ten\n\n4. Qualit\u00e4tssicherung\n   - Testing auf verschiedenen Ger\u00e4ten\n   - Performance-Optimierung\n   - \u00dcberpr\u00fcfung der Benutzerfreundlichkeit ",
+        "metadata": {},
+        "model": "gpt-4o-2024-08-06",
+        "name": "WebdesignAgent",
+        "object": "assistant",
+        "tools": [
+            {
+                "function": {
+                    "name": "AnalyzeBriefingTool",
+                    "description": "Analysiert ein Website-Briefing und erstellt eine strukturierte Analyse.",
+                    "parameters": {
+                        "properties": {
+                            "briefing": {
+                                "description": "Das zu analysierende Website-Briefing",
+                                "title": "Briefing",
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "briefing"
+                        ],
+                        "type": "object"
+                    },
+                    "strict": false
+                },
+                "type": "function"
+            },
+            {
+                "function": {
+                    "name": "SEOResearchTool",
+                    "description": "Schl\u00e4gt SEO-relevante Begriffe basierend auf dem Briefing vor.",
+                    "parameters": {
+                        "properties": {
+                            "briefing": {
+                                "description": "Das Briefing f\u00fcr die SEO-Analyse",
+                                "title": "Briefing",
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "briefing"
+                        ],
+                        "type": "object"
+                    },
+                    "strict": false
+                },
+                "type": "function"
+            },
+            {
+                "function": {
+                    "name": "QuestionGeneratorTool",
+                    "description": "Generiert Verst\u00e4ndnisfragen basierend auf dem Briefing.",
+                    "parameters": {
+                        "properties": {
+                            "briefing": {
+                                "description": "Das Briefing, zu dem Fragen generiert werden sollen",
+                                "title": "Briefing",
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "briefing"
+                        ],
+                        "type": "object"
+                    },
+                    "strict": false
+                },
+                "type": "function"
+            },
+            {
+                "function": {
+                    "name": "UpdateAnalysisTool",
+                    "description": "Aktualisiert die Analyse basierend auf den Antworten.",
+                    "parameters": {
+                        "properties": {
+                            "initial_briefing": {
+                                "description": "Das urspr\u00fcngliche Briefing",
+                                "title": "Initial Briefing",
+                                "type": "string"
+                            },
+                            "questions": {
+                                "description": "Die gestellten Fragen",
+                                "title": "Questions",
+                                "type": "string"
+                            },
+                            "answers": {
+                                "description": "Die Antworten auf die Fragen",
+                                "title": "Answers",
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "answers",
+                            "initial_briefing",
+                            "questions"
+                        ],
+                        "type": "object"
+                    },
+                    "strict": false
+                },
+                "type": "function"
+            },
+            {
+                "function": {
+                    "name": "SendMessage",
+                    "description": "Correctly extracted `SendMessage` with all the required parameters with correct types",
+                    "parameters": {
+                        "$defs": {
+                            "recipient": {
+                                "const": "ContentCreationAgent",
+                                "enum": [
+                                    "ContentCreationAgent"
+                                ],
+                                "title": "recipient",
+                                "type": "string"
+                            }
+                        },
+                        "properties": {
+                            "recipient": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/$defs/recipient"
+                                    }
+                                ],
+                                "description": "ContentCreationAgent: Ein Agent f\u00fcr die Erstellung von Website-Content\n"
+                            },
+                            "my_primary_instructions": {
+                                "description": "Please repeat your primary instructions step-by-step, including both completed and the following next steps that you need to perform. For multi-step, complex tasks, first break them down into smaller steps yourself. Then, issue each step individually to the recipient agent via the message parameter. Each identified step should be sent in a separate message. Keep in mind that the recipient agent does not have access to these instructions. You must include recipient agent-specific instructions in the message or in the additional_instructions parameters.",
+                                "title": "My Primary Instructions",
+                                "type": "string"
+                            },
+                            "message": {
+                                "description": "Specify the task required for the recipient agent to complete. Focus on clarifying what the task entails, rather than providing exact instructions. Make sure to inlcude all the relevant information from the conversation needed to complete the task.",
+                                "title": "Message",
+                                "type": "string"
+                            },
+                            "message_files": {
+                                "anyOf": [
+                                    {
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "type": "array"
+                                    },
+                                    {
+                                        "type": "null"
+                                    }
+                                ],
+                                "default": null,
+                                "description": "A list of file IDs to be sent as attachments to this message. Only use this if you have the file ID that starts with 'file-'.",
+                                "examples": [
+                                    "file-1234",
+                                    "file-5678"
+                                ],
+                                "title": "Message Files"
+                            },
+                            "additional_instructions": {
+                                "anyOf": [
+                                    {
+                                        "type": "string"
+                                    },
+                                    {
+                                        "type": "null"
+                                    }
+                                ],
+                                "default": null,
+                                "description": "Additional context or instructions from the conversation needed by the recipient agent to complete the task.",
+                                "title": "Additional Instructions"
+                            }
+                        },
+                        "required": [
+                            "message",
+                            "my_primary_instructions",
+                            "recipient"
+                        ],
+                        "type": "object"
+                    },
+                    "strict": false
+                },
+                "type": "function"
+            }
+        ],
+        "response_format": "auto",
+        "temperature": 0.3,
+        "tool_resources": {
+            "code_interpreter": null,
+            "file_search": null
+        },
+        "top_p": 1.0,
+        "reasoning_effort": null
+    },
+    {
+        "id": "asst_tEdxtpXw6kwdOedboTT3lPaS",
+        "created_at": 1739181684,
+        "description": "Ein Agent f\u00fcr die Erstellung von Website-Content",
+        "instructions": "agency_manifesto.md\n\n# Content Creation Agent Rolle\n\nDer Content Creation Agent ist spezialisiert auf die Erstellung von SEO-optimierten Inhalten f\u00fcr Webseiten. Er arbeitet eng mit dem Webdesign Agent zusammen, um hochwertige und zielgerichtete Inhalte zu erstellen.\n\n# Ziele\n\n1. Erstellung von SEO-optimierten Texten\n2. Analyse von Briefings und Kundenanforderungen\n3. Generierung von zielgruppengerechten Inhalten\n4. Optimierung bestehender Texte\n5. Qualit\u00e4tssicherung der erstellten Inhalte\n\n# Arbeitsablauf\n\n1. Content-Analyse\n   - Analyse des Briefings\n   - Identifikation der Zielgruppe\n   - Bestimmung der Tonalit\u00e4t\n   - SEO-Keyword-Recherche\n\n2. Content-Erstellung\n   - Strukturierung der Inhalte\n   - Einbindung von SEO-Keywords\n   - Anpassung an Corporate Language\n   - Erstellung verschiedener Content-Typen\n\n3. Optimierung\n   - SEO-Optimierung\n   - Readability Check\n   - Anpassung an Style Guidelines\n   - \u00dcberpr\u00fcfung der Keyword-Dichte\n\n4. Review und Finalisierung\n   - Qualit\u00e4tskontrolle\n   - Rechtschreibpr\u00fcfung\n   - Formatierung\n   - Finale Abstimmung mit dem Webdesign Agent ",
+        "metadata": {},
+        "model": "gpt-4o-2024-08-06",
+        "name": "ContentCreationAgent",
+        "object": "assistant",
+        "tools": [
+            {
+                "function": {
+                    "name": "ContentGeneratorTool",
+                    "description": "Ein Tool zur Generierung von Website-Inhalten basierend auf dem Briefing und der Analyse.",
+                    "parameters": {
+                        "$defs": {
+                            "ContentParams": {
+                                "description": "Parameter f\u00fcr die Content-Generierung",
+                                "properties": {
+                                    "menu_item": {
+                                        "description": "Der Name des Men\u00fcpunkts, f\u00fcr den Content generiert werden soll",
+                                        "title": "Menu Item",
+                                        "type": "string"
+                                    },
+                                    "num_paragraphs": {
+                                        "description": "Anzahl der zu generierenden Abs\u00e4tze",
+                                        "title": "Num Paragraphs",
+                                        "type": "integer"
+                                    },
+                                    "words_per_paragraph": {
+                                        "description": "Ungef\u00e4hre Anzahl W\u00f6rter pro Absatz",
+                                        "title": "Words Per Paragraph",
+                                        "type": "integer"
+                                    },
+                                    "briefing": {
+                                        "description": "Das vollst\u00e4ndige Briefing des Kunden",
+                                        "title": "Briefing",
+                                        "type": "string"
+                                    },
+                                    "analysis": {
+                                        "description": "Die finale Analyse des Briefings",
+                                        "title": "Analysis",
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "menu_item",
+                                    "num_paragraphs",
+                                    "words_per_paragraph",
+                                    "briefing",
+                                    "analysis"
+                                ],
+                                "title": "ContentParams",
+                                "type": "object"
+                            }
+                        },
+                        "properties": {
+                            "params": {
+                                "$ref": "#/$defs/ContentParams"
+                            }
+                        },
+                        "required": [
+                            "params"
+                        ],
+                        "type": "object"
+                    },
+                    "strict": false
+                },
+                "type": "function"
+            }
+        ],
+        "response_format": "auto",
+        "temperature": 0.3,
+        "tool_resources": {
+            "code_interpreter": null,
+            "file_search": null
+        },
+        "top_p": 1.0,
+        "reasoning_effort": null
+    }
+]
